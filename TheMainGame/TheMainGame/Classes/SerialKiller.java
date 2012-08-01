@@ -5,11 +5,11 @@ import java.util.Random;
 public class SerialKiller extends Monster {
 
 	public SerialKiller(){
+		super("Serial Killer");
 		this.statGeneration();
 	}
 	
 	private void statGeneration(){
-		this.setName("Serial Killer");
 		Random generator = new Random();
 		int randNum = generator.nextInt(8) + 2;
 		this.setHealth(randNum);

@@ -1,11 +1,16 @@
 package TheMainGame.Classes;
 
+
 public abstract class Monster {
-	private int health;
-	private int attack;
-	private int exp;
-	private int gold;
-	private String name;
+	protected int health;
+	protected int attack;
+	protected int exp;
+	protected int gold;
+	final private String name;
+	
+	protected Monster(String name){
+		this.name = name;
+	}
 	
 	public void setHealth(int health){
 		this.health = health;
@@ -37,10 +42,6 @@ public abstract class Monster {
 
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 	
 	public int getAttack() {

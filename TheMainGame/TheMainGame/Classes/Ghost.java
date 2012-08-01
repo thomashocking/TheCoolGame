@@ -5,11 +5,11 @@ import java.util.Random;
 public class Ghost extends Monster {
 
 	public Ghost(){
+		super("Ghost");
 		this.statGeneration();
 	}
 	
 	private void statGeneration(){
-		this.setName("Ghost");
 		Random generator = new Random();
 		int randNum = generator.nextInt(6) + 1;
 		this.setHealth(randNum);
