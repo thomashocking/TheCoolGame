@@ -8,11 +8,15 @@ import java.util.Scanner;
 
 interface GameConstants {
 	public static final long DEFAULT_SEED = 1;
+	public static final int EXP_CAP = 100;
+	public static final int HEALTH_POTION_COST = 15;
+	public static final int MANA_POTION_COST = 20;
 }
 
 public class GameControl implements GameConstants {
 	HumanCharacter theHumanCharacter;
 	Random generator;
+	Shop theShop;
 	
 	public GameControl() {
 		this(DEFAULT_SEED);
@@ -20,7 +24,8 @@ public class GameControl implements GameConstants {
 	
 	public GameControl(long seed){
 		generator = new Random(seed);
-		theHumanCharacter = new HumanCharacter();		
+		theHumanCharacter = new HumanCharacter();	
+		theShop = new Shop();
 	}
 	
 	public void startGame(){
@@ -39,8 +44,12 @@ public class GameControl implements GameConstants {
 	
 	//Prompt Choice from user...
 	private void characterChoice(){
+		boolean endGame = false;
+		while(!endGame){
 		Scanner input = new Scanner(System.in);
 		int userInput;
+		
+		this.levelCheck(theHumanCharacter);
 		
 		System.out.println("What would you like to do?");
 		System.out.println("1 = Stats");
@@ -58,8 +67,8 @@ public class GameControl implements GameConstants {
 			}
 		else if(userInput == 3){
 			System.out.println("You've entered the shop!");
-			//Shop code
-		}
+			theShop.enterShop(theHumanCharacter);
+			}
 		else{
 			System.out.println("You didn't enter in a valid command");
 			System.out.println(userInput);
@@ -74,7 +83,7 @@ public class GameControl implements GameConstants {
 		}
 			
 		}
-	
+	}
 	//Create dungeon code
 	private void enterDungeon(HumanCharacter theHumanCharacter){
 		
@@ -128,8 +137,9 @@ public class GameControl implements GameConstants {
 				this.willMonsterAttack(theHumanCharacter, theMonster);
 			}
 			else if(choice.compareTo("magic") == 0){
-				//human magic code here...
-				combatDone = true;
+				//Code is complete.
+				combatDone = theHumanCharacter.magicAttack(theMonster);
+				this.willMonsterAttack(theHumanCharacter, theMonster);
 			}
 			else if(choice.compareTo("info me") == 0){
 				theHumanCharacter.description(); 
@@ -167,6 +177,14 @@ public class GameControl implements GameConstants {
 		}
 		else {
 			System.out.println("You've dodged the monsters attack!");
+		}
+	}
+	
+	private void levelCheck(HumanCharacter theHumanCharacter){
+		if(theHumanCharacter.getExp() >= EXP_CAP){
+			System.out.println("LEVEL UP!!!");
+				theHumanCharacter.levelUp();
+			
 		}
 	}
 }

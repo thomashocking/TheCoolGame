@@ -1,6 +1,7 @@
 package TheMainGame.Classes;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class HumanCharacter implements GameConstants {
 	
@@ -11,6 +12,10 @@ public class HumanCharacter implements GameConstants {
 	private int gold;
 	private String name;
 	private int attack;
+	private static int HEALTH_CAP = 0;
+	private static int MANA_CAP = 0;
+	private int healthPotion;
+	private int manaPotion;
 	
 	//Human Constructor
 	public HumanCharacter(){
@@ -25,6 +30,14 @@ public class HumanCharacter implements GameConstants {
 		this.health -= health;
 	}
 	
+	public void setHealthCap(int healthCap){
+		this.HEALTH_CAP = healthCap;
+	}
+	
+	public int getHealthCap(){
+		return HEALTH_CAP;
+	}
+	
 	public int getHealth(){
 		return health;
 	}
@@ -32,9 +45,21 @@ public class HumanCharacter implements GameConstants {
 	public int getMana() {
 		return mana;
 	}
+	
+	public void setManaCap(int manaCap){
+		this.MANA_CAP = manaCap;
+	}
+	
+	public int getManaCap(){
+		return MANA_CAP;
+	}
 
 	public void setMana(int mana) {
 		this.mana = mana;
+	}
+	
+	public void setManaOnUse(int mana){
+		this.mana -= mana;
 	}
 
 	public int getExp() {
@@ -60,7 +85,7 @@ public class HumanCharacter implements GameConstants {
 	public void setGoldOnLoot(int gold){
 		this.gold += gold;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -76,7 +101,40 @@ public class HumanCharacter implements GameConstants {
 	public void setAttack(int attack) {
 		this.attack = attack;
 	}
+	
+	public int getHealthPotion() {
+		return healthPotion;
+	}
+	public void setHealthPotion(int healthPotion) {
+		this.healthPotion = healthPotion;
+	}
+	
+	public void setHealthPotionOnPurchase(int healthPotion){
+		this.healthPotion += healthPotion;
+	}
+	
+	public int getManaPotion() {
+		return manaPotion;
+	}
+	public void setManaPotion(int manaPotion) {
+		this.manaPotion = manaPotion;
+	}
+	
+	public void setManaPotionOnPurchase(int manaPotion){
+		this.manaPotion += manaPotion;
+	}
 
+	public void buyManaPotions(int amount){
+		int totalGold = amount * 20;
+		System.out.println("Total cost: " + totalGold + " gold!");
+		if(totalGold > this.getGold()){
+			System.out.println("Sorry not enough!");
+		}else{
+			this.setGold(this.getGold() - totalGold);
+			this.setManaPotionOnPurchase(amount);
+			System.out.println("You now have " + this.getManaPotion() + " potions!");
+		}
+	}
 	public void description(){
 		System.out.println("Your characters name is: " + name);
 		System.out.println("Your health is: " + health);
@@ -106,16 +164,66 @@ public class HumanCharacter implements GameConstants {
 		return false;
 	}
 	
+	public boolean magicAttack(Monster theMonster){
+		System.out.println("How much damage would you like to do?");
+		System.out.println("Mana: " + this.getMana());
+		System.out.print("command: ");
+		Scanner input = new Scanner(System.in);
+		int magicDamage = input.nextInt();
+		
+		if(magicDamage > this.getMana()){
+			System.out.println("Not enough mana!");
+			magicDamage = input.nextInt();
+			while(magicDamage > this.getMana()){
+				System.out.println("Not enough mana!");
+				System.out.println("Enter in a different value!");
+				magicDamage = input.nextInt();
+			}
+		}else{
+			boolean monsterDead = false;
+			theMonster.setHealthOnAttack(magicDamage);
+			this.setManaOnUse(magicDamage);
+			System.out.println("The " + theMonster.getName() + " has taken " + magicDamage + " damage!");
+			if(theMonster.getHealth() <= 0){
+				theMonster.setHealth(0);
+				monsterDead = true;
+				System.out.println("the monster is now at " + theMonster.getHealth() + " health!");
+			}
+			
+			if(monsterDead){
+				System.out.println("The " + theMonster.getName() + " has died!");
+				return monsterDead;
+			}
+		}
+		return false;
+		
+	}
+
 	private void statGeneration(){
 		Random generator = new Random();
 		int randNum = generator.nextInt(10) + 6;
 		this.setHealth(randNum);
+		this.setHealthCap(randNum);
 		randNum = generator.nextInt(10) + 1;
 		this.setMana(randNum);
+		this.setManaCap(randNum);
 		randNum = generator.nextInt(6) + 1;
 		this.setAttack(randNum);
-		this.setGold(0);
+		this.setGold(100);
 		this.setExp(0);
 	}
+	
+	protected void levelUp(){
+		this.setHealthCap(this.getHealthCap()+1);
+		this.setHealth(HEALTH_CAP);
+		this.setManaCap(this.getManaCap()+1);
+		this.setMana(MANA_CAP);
+		this.setAttack(this.getAttack()+1);
+		this.setExp(0);
+		System.out.println("You grow stronger!");
+		this.description();
+		
+	}
+	
 }
 
