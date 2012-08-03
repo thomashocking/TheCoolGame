@@ -2,6 +2,7 @@ package TheMainGame.Classes;
 
 import TheMainGame.Classes.*;
 
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -35,6 +36,7 @@ public class GameControl implements GameConstants {
 	
 	private void characterStart(HumanCharacter theHumanCharacter){
 		System.out.println("What is your name?");
+		System.out.print("Name:");
 		Scanner input = new Scanner(System.in);
 		String humanName = input.next();
 		theHumanCharacter.setName(humanName);
@@ -47,7 +49,7 @@ public class GameControl implements GameConstants {
 		boolean endGame = false;
 		while(!endGame){
 		Scanner input = new Scanner(System.in);
-		int userInput;
+		String userInput;
 		
 		this.levelCheck(theHumanCharacter);
 		
@@ -55,35 +57,35 @@ public class GameControl implements GameConstants {
 		System.out.println("1 = Stats");
 		System.out.println("2 = Dungeon");
 		System.out.println("3 = Shop");
+		System.out.print("Command:");
+	
+		userInput = input.next();
 		
-		userInput = input.nextInt();
-		
-		if(userInput == 1){
+		if(userInput.compareTo("1") == 0){
 			theHumanCharacter.description();
 		}
-		else if(userInput == 2){
+		else if(userInput.compareTo("2") == 0){
 			System.out.println("You've entered in a dungeon");
 			this.enterDungeon(theHumanCharacter);		
 			}
-		else if(userInput == 3){
+		else if(userInput.compareTo("3") == 0){
 			System.out.println("You've entered the shop!");
 			theShop.enterShop(theHumanCharacter);
 			}
 		else{
-			System.out.println("You didn't enter in a valid command");
-			System.out.println(userInput);
 			
-			while(userInput <= 0 || userInput > 4){
+			System.out.println("You didn't enter in a valid command");
+			while((userInput.compareTo("1") == 1 )||( userInput.compareTo("2") == 1 )||( userInput.compareTo("3") == 1)){
 				System.out.println("What would you like to do?");
 				System.out.println("1 = Stats");
 				System.out.println("2 = Dungeon");
 				System.out.println("3 = Shop");
-				userInput = input.nextInt();
+				userInput = input.next();
 			}
-		}
 			
 		}
 	}
+}
 	//Create dungeon code
 	private void enterDungeon(HumanCharacter theHumanCharacter){
 		
@@ -103,7 +105,7 @@ public class GameControl implements GameConstants {
 	}
 	
 	private void monsterEncouter(HumanCharacter theHumanCharacter){
-		//monster encounter code here...
+		//monster encounter code done.
 		Monster generatedMonster = this.monsterArrayGenerator();
 		System.out.println("You've encountered a " + generatedMonster.getName() + "!");
 		this.humanAction(theHumanCharacter, generatedMonster);
@@ -123,6 +125,7 @@ public class GameControl implements GameConstants {
 		System.out.println("What would you like to do?");
 		System.out.println("Type 'melee' to use melee attack");
 		System.out.println("Type 'magic' to use magic attack");
+		System.out.println("Type 'potion' to use a health, or mana potion.");
 		System.out.println("Type 'info' followed by either 'me' or 'monster' to see stats");
 		String choice;
 		Scanner input = new Scanner(System.in);
@@ -137,9 +140,13 @@ public class GameControl implements GameConstants {
 				this.willMonsterAttack(theHumanCharacter, theMonster);
 			}
 			else if(choice.compareTo("magic") == 0){
+				
 				//Code is complete.
 				combatDone = theHumanCharacter.magicAttack(theMonster);
 				this.willMonsterAttack(theHumanCharacter, theMonster);
+			}
+			else if(choice.compareTo("potion") == 0){
+				theHumanCharacter.usePotion();
 			}
 			else if(choice.compareTo("info me") == 0){
 				theHumanCharacter.description(); 

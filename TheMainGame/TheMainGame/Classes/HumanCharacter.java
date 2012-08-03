@@ -16,9 +16,11 @@ public class HumanCharacter implements GameConstants {
 	private static int MANA_CAP = 0;
 	private int healthPotion;
 	private int manaPotion;
+	Scanner input;//for potion input
 	
 	//Human Constructor
 	public HumanCharacter(){
+		input = new Scanner(System.in);
 		this.statGeneration();
 	}
 	//Human character methods
@@ -123,9 +125,67 @@ public class HumanCharacter implements GameConstants {
 	public void setManaPotionOnPurchase(int manaPotion){
 		this.manaPotion += manaPotion;
 	}
-
+	
+	private void setManaOnPotionUse(){
+		if(this.getMana() < MANA_CAP){
+			if((this.getMana() + 5) > MANA_CAP){
+				System.out.println("Set mana to full!");
+				this.setMana(MANA_CAP);
+				this.setManaPotion(this.getManaPotion() -1);
+			}
+			else{
+				System.out.println("5 mana gained!");
+				this.setMana(5);
+				this.setManaPotion(this.getManaPotion() -1);
+			}
+		}
+		else{
+			System.out.println("You don't need a potion!");
+		}
+	}
+	
+	private void setHealthOnPotionUse(){
+		if(this.getHealth() < HEALTH_CAP){
+			if((this.getHealth() + 8) > HEALTH_CAP){
+				System.out.println("Healed to full!");
+				this.setHealth(HEALTH_CAP);
+				this.setHealthPotion(this.getHealthPotion() -1);
+			}
+			else{
+				System.out.println("Healed 8 hp!");
+				this.setHealth(8);
+				this.setHealthPotion(this.getHealthPotion() -1);
+			}
+		}
+		else{
+			System.out.println("You don't need a potion!");
+		}
+	}
+	
+	public void usePotion(){
+		System.out.println("What type of potion would you like?");
+		System.out.println("Type 'mana potion' to use a mana potion");
+		System.out.println("Type 'health potion' to use a health potion");
+		String potionType = input.nextLine();
+		if(potionType.compareTo("mana potion") == 0){
+			if(this.getManaPotion() == 0){
+				System.out.println("Sorry no potions!");
+			}
+			else{
+			this.setManaOnPotionUse();
+			}
+		}
+		else if(potionType.compareTo("health potion") == 0){
+			if(this.getHealthPotion() == 0){
+				System.out.println("Sorry no potions!");
+			}
+			else{
+			this.setHealthOnPotionUse();
+			}
+		}
+	}
 	public void buyManaPotions(int amount){
-		int totalGold = amount * 20;
+		int totalGold = amount * MANA_POTION_COST;
 		System.out.println("Total cost: " + totalGold + " gold!");
 		if(totalGold > this.getGold()){
 			System.out.println("Sorry not enough!");
@@ -135,6 +195,19 @@ public class HumanCharacter implements GameConstants {
 			System.out.println("You now have " + this.getManaPotion() + " potions!");
 		}
 	}
+	
+	public void buyHealthPotions(int amount){
+		int totalGold = amount * HEALTH_POTION_COST;
+		System.out.println("Total cost: " + totalGold + " gold!");
+		if(totalGold > this.getGold()){
+			System.out.println("Sorry not enough!");
+		}else{
+			this.setGold(this.getGold() - totalGold);
+			this.setHealthPotionOnPurchase(amount);
+			System.out.println("You now have " + this.getHealthPotion() + " potions!");
+		}
+	}
+	
 	public void description(){
 		System.out.println("Your characters name is: " + name);
 		System.out.println("Your health is: " + health);
@@ -209,7 +282,7 @@ public class HumanCharacter implements GameConstants {
 		this.setManaCap(randNum);
 		randNum = generator.nextInt(6) + 1;
 		this.setAttack(randNum);
-		this.setGold(100);
+		this.setGold(0);
 		this.setExp(0);
 	}
 	

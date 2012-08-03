@@ -18,10 +18,19 @@ public class Shop implements GameConstants {
 		System.out.println("Type 'health potion' for Health Potions --15g each");
 		System.out.println("Type 'exit' to leave.");
 		System.out.println("Your gold: " + theHumanCharacter.getGold());
+		System.out.print("Command:");
 		String choice = input.nextLine();
+		System.out.println("-----");
+		System.out.println(choice);
+		System.out.println("-----");
+		if(choice.compareTo("")==0){
+			System.out.println("wtf");
+		}
 		if(choice.compareTo("mana potion") == 0){
 			theHumanCharacter.buyManaPotions(this.sellPotions("mana potion"));
-			
+		}
+		else if(choice.compareTo("health potion") == 0){
+			theHumanCharacter.buyHealthPotions(this.sellPotions("health potion"));
 		}
 		else if(choice.compareTo("exit") == 0){
 			System.out.println("Good bye!");
