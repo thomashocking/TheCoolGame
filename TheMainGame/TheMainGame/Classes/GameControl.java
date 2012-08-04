@@ -18,6 +18,7 @@ public class GameControl implements GameConstants {
 	HumanCharacter theHumanCharacter;
 	Random generator;
 	Shop theShop;
+	TreasureChest treasureChest;
 	
 	public GameControl() {
 		this(DEFAULT_SEED);
@@ -27,6 +28,7 @@ public class GameControl implements GameConstants {
 		generator = new Random(seed);
 		theHumanCharacter = new HumanCharacter();	
 		theShop = new Shop();
+		treasureChest = new TreasureChest(seed);
 	}
 	
 	public void startGame(){
@@ -91,7 +93,7 @@ public class GameControl implements GameConstants {
 		
 		int randNum = generator.nextInt(100) + 1;
 		if(randNum >= 100){
-			//treasure chest code
+			theHumanCharacter.openChest(treasureChest.open());
 		}
 		else{
 			this.monsterEncouter(theHumanCharacter);

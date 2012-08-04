@@ -20,9 +20,6 @@ public class Shop implements GameConstants {
 		System.out.println("Your gold: " + theHumanCharacter.getGold());
 		System.out.print("Command:");
 		String choice = input.nextLine();
-		System.out.println("-----");
-		System.out.println(choice);
-		System.out.println("-----");
 		if(choice.compareTo("")==0){
 			System.out.println("wtf");
 		}

@@ -208,6 +208,14 @@ public class HumanCharacter implements GameConstants {
 		}
 	}
 	
+	public void setPotionOnChest(int randNum){
+		if(randNum > 75){
+			this.manaPotion += 1;
+		}
+		else{
+			this.healthPotion += 1;
+		}
+	}
 	public void description(){
 		System.out.println("Your characters name is: " + name);
 		System.out.println("Your health is: " + health);
@@ -215,6 +223,8 @@ public class HumanCharacter implements GameConstants {
 		System.out.println("Your mana is: " + mana);
 		System.out.println("Your exp is: " + exp);
 		System.out.println("Your gold is: " + gold);
+		System.out.println("Mana Potions: " + manaPotion);
+		System.out.println("Health Potions: " + healthPotion);
 	}
 	
 	public boolean meleeAttack(Monster theMonster){
@@ -295,7 +305,15 @@ public class HumanCharacter implements GameConstants {
 		this.setExp(0);
 		System.out.println("You grow stronger!");
 		this.description();
-		
+	}
+	
+	public void openChest(int chestOpened){
+		if(chestOpened > 25){
+			this.setGold(chestOpened);
+		}
+		else{
+			this.setPotionOnChest(chestOpened);
+		}
 	}
 	
 }
