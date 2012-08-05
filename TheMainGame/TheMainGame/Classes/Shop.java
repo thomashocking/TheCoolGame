@@ -21,7 +21,8 @@ public class Shop implements GameConstants {
 		System.out.print("Command:");
 		String choice = input.nextLine();
 		if(choice.compareTo("")==0){
-			System.out.println("wtf");
+			System.out.println("Error catching...please input again...");
+			choice = input.nextLine();
 		}
 		if(choice.compareTo("mana potion") == 0){
 			theHumanCharacter.buyManaPotions(this.sellPotions("mana potion"));

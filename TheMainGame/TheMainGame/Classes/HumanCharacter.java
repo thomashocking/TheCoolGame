@@ -252,8 +252,9 @@ public class HumanCharacter implements GameConstants {
 		System.out.println("Mana: " + this.getMana());
 		System.out.print("command: ");
 		Scanner input = new Scanner(System.in);
-		int magicDamage = input.nextInt();
-		
+		try{
+		String theMagicDamage = input.next();
+		int magicDamage = Integer.parseInt(theMagicDamage);
 		if(magicDamage > this.getMana()){
 			System.out.println("Not enough mana!");
 			magicDamage = input.nextInt();
@@ -278,6 +279,11 @@ public class HumanCharacter implements GameConstants {
 				return monsterDead;
 			}
 		}
+		}
+		catch(NumberFormatException e){
+			System.err.print("You fail casting your magic!\n");	
+			}
+		
 		return false;
 		
 	}
