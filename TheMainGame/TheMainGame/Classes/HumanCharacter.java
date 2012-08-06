@@ -16,6 +16,8 @@ public class HumanCharacter implements GameConstants {
 	private static int MANA_CAP = 0;
 	private int healthPotion;
 	private int manaPotion;
+	private int LEVEL_CAP = 5;
+	private int level;
 	Scanner input;//for potion input
 	
 	//Human Constructor
@@ -126,6 +128,14 @@ public class HumanCharacter implements GameConstants {
 		this.manaPotion += manaPotion;
 	}
 	
+	public void setLevel(int newLevel){
+		this.level = newLevel;
+	}
+	
+	public int getLevel(){
+		return level;
+	}
+	
 	private void setManaOnPotionUse(){
 		if(this.getMana() < MANA_CAP){
 			if((this.getMana() + 5) > MANA_CAP){
@@ -223,6 +233,7 @@ public class HumanCharacter implements GameConstants {
 		System.out.println("Your mana is: " + mana);
 		System.out.println("Your exp is: " + exp);
 		System.out.println("Your gold is: " + gold);
+		System.out.println("Your level is: " + level);
 		System.out.println("Mana Potions: " + manaPotion);
 		System.out.println("Health Potions: " + healthPotion);
 	}
@@ -300,6 +311,7 @@ public class HumanCharacter implements GameConstants {
 		this.setAttack(randNum);
 		this.setGold(0);
 		this.setExp(0);
+		this.setLevel(5);
 	}
 	
 	protected void levelUp(){
@@ -311,6 +323,7 @@ public class HumanCharacter implements GameConstants {
 		this.setExp(0);
 		System.out.println("You grow stronger!");
 		this.description();
+		this.level++;
 	}
 	
 	public void openChest(int chestOpened){

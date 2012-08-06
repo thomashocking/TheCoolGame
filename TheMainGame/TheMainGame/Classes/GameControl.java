@@ -19,6 +19,7 @@ public class GameControl implements GameConstants {
 	Random generator;
 	Shop theShop;
 	TreasureChest treasureChest;
+	MonsterBoss boss;
 	
 	public GameControl() {
 		this(DEFAULT_SEED);
@@ -68,7 +69,11 @@ public class GameControl implements GameConstants {
 		}
 		else if(userInput.compareTo("2") == 0){
 			System.out.println("You've entered in a dungeon");
-			this.enterDungeon(theHumanCharacter);		
+			if(theHumanCharacter.getLevel() == 5){
+				System.out.println("The Monster Boss waits...");
+				this.monsterBossEncounter(theHumanCharacter);
+			}
+			this.enterDungeon(theHumanCharacter);
 			}
 		else if(userInput.compareTo("3") == 0){
 			System.out.println("You've entered the shop!");
@@ -195,5 +200,10 @@ public class GameControl implements GameConstants {
 				theHumanCharacter.levelUp();
 			
 		}
+	}
+	
+	public void monsterBossEncounter(HumanCharacter theHuman){
+		boss = new MonsterBoss("The boss");
+		this.humanAction(theHumanCharacter, boss);
 	}
 }
