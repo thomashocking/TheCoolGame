@@ -311,7 +311,7 @@ public class HumanCharacter implements GameConstants {
 		this.setAttack(randNum);
 		this.setGold(0);
 		this.setExp(0);
-		this.setLevel(5);
+		this.setLevel(0);
 	}
 	
 	protected void levelUp(){
@@ -332,6 +332,12 @@ public class HumanCharacter implements GameConstants {
 		}
 		else{
 			this.setPotionOnChest(chestOpened);
+		}
+	}
+	
+	public void deadCheck(boolean isDead){
+		if(isDead){
+			System.out.println("You've been killed...");
 		}
 	}
 	

@@ -17,14 +17,18 @@ public class MonsterBoss extends Monster {
 	}
 
 	@Override
-	public void attack(HumanCharacter theCharacter) {
+	public boolean attack(HumanCharacter theCharacter) {
+		boolean isDead = false;
 		theCharacter.setHealthOnAttack(this.getAttack());
 		System.out.println("The " + this.getName() + " attacks!");
 		System.out.println("You have taken " + attack + " damage!");
-		System.out.println("Your health is now: " + theCharacter.getHealth());
 		if(theCharacter.getHealth() <= 0){
 			theCharacter.setHealth(0);
+			isDead = true;
+			return isDead;
 		}
+		System.out.println("Your health is now: " + theCharacter.getHealth());
+		return false;
 	}
 
 	private void statGeneration(){

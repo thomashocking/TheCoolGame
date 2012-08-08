@@ -29,15 +29,20 @@ public class Ghost extends Monster {
 	}
 	
 	@Override
-	public void attack(HumanCharacter theCharacter){
+	public boolean attack(HumanCharacter theCharacter){
+		boolean isDead = false;
 		int attack = this.getAttack();
 		theCharacter.setHealthOnAttack(attack);
 		System.out.println("The " + this.getName() + " attacks!");
 		System.out.println("You have taken " + attack + " damage!");
 		if(theCharacter.getHealth() <= 0){
 			theCharacter.setHealth(0);
+			isDead = true;
+			return isDead;
 		}
 		System.out.println("You are now at " + theCharacter.getHealth() + " health!");
+		return false;
 	}
+	
 
 }

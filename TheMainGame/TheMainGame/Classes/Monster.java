@@ -53,6 +53,6 @@ public abstract class Monster {
 	}
 	
 	public abstract void description();
-	public abstract void attack(HumanCharacter theCharacter);
+	public abstract boolean attack(HumanCharacter theCharacter);
 	
 }
