@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 *.class
 
 # Package Files #
 *.jar
 *.war
 *.ear
+=======
+bin/*
+.project
+.classpath
+.settings
+.DS_Store
+>>>>>>> b9ae15ebb361905e2dfc135baaa65faa37c91236
